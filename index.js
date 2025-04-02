@@ -525,34 +525,8 @@ function setupEventListeners() {
         }
         updateCurrentHideSettingsDisplay(); // Update display values before showing
 
-        const $popup = $(domCache.popup);
-        $popup.css({
-            display: 'block',
-            visibility: 'hidden',
-            position: 'fixed', // Use fixed for centering relative to viewport
-            left: '50%',
-            top: '50%', // Start at center
-            transform: 'translate(-50%, -50%)' // Center precisely
-        });
-        
-        // 确保弹窗不会超出屏幕
-        setTimeout(() => {
-            const popupHeight = $popup.outerHeight();
-            const windowHeight = $(window).height();
-            
-            // 如果弹窗高度超过窗口的80%，调整位置，确保至少有10%的窗口高度在顶部
-            if (popupHeight > windowHeight * 0.8) {
-                const topOffset = windowHeight * 0.1;
-                $popup.css({
-                    top: topOffset + 'px',
-                    transform: 'translateX(-50%)',
-                    maxHeight: (windowHeight - topOffset * 2) + 'px',
-                    overflow: 'auto'
-                });
-            }
-            
-            $popup.css('visibility', 'visible'); // 定位后再显示
-        }, 0);
+        // 简化弹出窗口显示逻辑，避免重复设置CSS中已定义的样式
+        $(domCache.popup).show();
     });
 
     // Popup Close Button
