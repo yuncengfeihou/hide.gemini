@@ -533,10 +533,26 @@ function setupEventListeners() {
             left: '50%',
             top: '50%', // Start at center
             transform: 'translate(-50%, -50%)' // Center precisely
-        }).css('visibility', 'visible'); // Show after positioning
-
-        // Adjust top position if too close to top/bottom (optional refinement)
-        // setTimeout(() => { ... calculate and adjust top ... }, 0);
+        });
+        
+        // 确保弹窗不会超出屏幕
+        setTimeout(() => {
+            const popupHeight = $popup.outerHeight();
+            const windowHeight = $(window).height();
+            
+            // 如果弹窗高度超过窗口的80%，调整位置，确保至少有10%的窗口高度在顶部
+            if (popupHeight > windowHeight * 0.8) {
+                const topOffset = windowHeight * 0.1;
+                $popup.css({
+                    top: topOffset + 'px',
+                    transform: 'translateX(-50%)',
+                    maxHeight: (windowHeight - topOffset * 2) + 'px',
+                    overflow: 'auto'
+                });
+            }
+            
+            $popup.css('visibility', 'visible'); // 定位后再显示
+        }, 0);
     });
 
     // Popup Close Button
